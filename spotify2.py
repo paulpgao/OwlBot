@@ -9,6 +9,6 @@ spotify = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 def search_track(track):
     track_id = spotify.search(track, type='track', limit=1)
     if len(track_id["tracks"]["items"]) > 0 :
-        return "Now Playing: " + track_id["tracks"]["items"][0]['external_urls'].get("spotify")
+        return "Now Playing on Spotify: " + track_id["tracks"]["items"][0]['external_urls'].get("spotify")
     else:
         return "No such song on Spotify."

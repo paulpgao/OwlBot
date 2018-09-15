@@ -1,31 +1,7 @@
-# import praw
-# import spotify
-#
-#
-# alexabot = praw.Reddit(user_agent = 'alexa_play_bot_2',
-#                   client_id = 'obgVOv3lTA0JbQ',
-#                   client_secret = 'sKCI6fZm9pHLy6WVUBNNuOIwV_8',
-#                   username = 'alexa_play_bot',
-#                   password = '990610Alexa')
-#
-# subreddit = alexabot.subreddit('testingground4bots')
-#
-# comments = subreddit.stream.comments()
-#
-# for comment in comments:
-#     text = comment.body
-#     author = comment.author
-#     if ('alexa play' in text.lower()) & (len(text) > 11):
-#         print (text)
-#         print (text.index('alexa play') + len('alexa play '))
-#         songtitle = text[text.index('al exa play ') + len('alexa play '):-1].split('.')[0]
-#         # songtitle = text[0:3]
-#         message = spotify.search_track(songtitle).format(author)
-#         comment.reply(message)
-
 import praw
 from youtube2 import youtube_search
 from spotify2 import search_track
+import weather
 
 alexabot = praw.Reddit(user_agent = 'alexa_play_bot_2',
                   client_id = 'obgVOv3lTA0JbQ',
@@ -51,9 +27,20 @@ for comment in comments:
         if 'owlbot play ' in text:
             search = text[text.index('owlbot play ') + len('owlbot play '):]
             video = youtube_search(search)
-            youtube_message = ("Now Playing: [%s](https://youtube.com/watch?v=%s)." % (video["snippet"]["title"], video["id"]["videoId"])).format(author)
+            youtube_message = ("Now Playing on Youtube: [%s](https://youtube.com/watch?v=%s)." % (video["snippet"]["title"], video["id"]["videoId"])).format(author)
             spotify_message = search_track(search)
-            comment.reply(youtube_message + " " + spotify_message)
+            comment.reply(youtube_message + '\n' + spotify_message)
             f1 = open('comments.txt', 'a+')
             f1.write(comment.id + " ")
             f1.close()
+        if 'owlbot what is the weather like in ' in text:
+            search = text[text.index('owlbot what is the weather like in ') + len('owlbot what is the weather like in '):]
+            city = search.split(',')[0]
+            state = search.split(',')[1]
+            zip = weather.get_zip(city, state)
+            weather_message = weather.get_weather(zip, city)
+            comment.reply(weather_message)
+            f1 = open('comments.txt', 'a+')
+            f1.write(comment.id + " ")
+            f1.close()
+
