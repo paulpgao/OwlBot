@@ -25,16 +25,18 @@
 
 import praw
 from youtube2 import youtube_search
+from spotify2 import search_track
 
-alexabot = praw.Reddit(user_agent = '_owl_bot_',
-                  client_id = '-aS31v8n1AiB0A',
-                  client_secret = 'Gb2b9IoMyM0h-JMz7yv0dZra19k',
-                  username = '_owl_bot_',
-                  password = 'hackrice')
+alexabot = praw.Reddit(user_agent = 'alexa_play_bot_2',
+                  client_id = 'obgVOv3lTA0JbQ',
+                  client_secret = 'sKCI6fZm9pHLy6WVUBNNuOIwV_8',
+                  username = 'alexa_play_bot',
+                  password = '990610Alexa')
 
 subreddit = alexabot.subreddit('testingground4bots')
 
 comments = subreddit.stream.comments()
+print("Running Owlbot")
 
 for comment in comments:
     f = open('comments.txt', 'r+')
@@ -49,8 +51,9 @@ for comment in comments:
         if 'owlbot play ' in text:
             search = text[text.index('owlbot play ') + len('owlbot play '):]
             video = youtube_search(search)
-            message = ("Now Playing: [%s](https://youtube.com/watch?v=%s)." % (video["snippet"]["title"], video["id"]["videoId"])).format(author)
-            comment.reply(message)
+            youtube_message = ("Now Playing: [%s](https://youtube.com/watch?v=%s)." % (video["snippet"]["title"], video["id"]["videoId"])).format(author)
+            spotify_message = search_track(search)
+            comment.reply(youtube_message + " " + spotify_message)
             f1 = open('comments.txt', 'a+')
             f1.write(comment.id + " ")
             f1.close()
