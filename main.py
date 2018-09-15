@@ -1,4 +1,10 @@
 import praw
+import gdata.youtube
+import gdata.youtube.service
+yt_service = gdata.youtube.service.YouTubeService()
+
+yt_service.developer_key = 'AIzaSyB4npSjJ7nlyDpIyjC2eiDGVHnomLP_bNs'
+yt_service.client_id = '992095518153-ucsohpb3emcu3glri3ojn62e8fdkvi8g.apps.googleusercontent.com'
 
 
 alexabot = praw.Reddit(user_agent = 'alexa_play_bot_2',
@@ -10,7 +16,6 @@ alexabot = praw.Reddit(user_agent = 'alexa_play_bot_2',
 subreddit = alexabot.subreddit('testingground4bots')
 
 comments = subreddit.stream.comments()
-# posts = subreddit.stream.submissions()
 
 for comment in comments:
     text = comment.body
@@ -18,10 +23,3 @@ for comment in comments:
     if 'alexa play' in text.lower():
         message = "Now Playing: ".format(author)
         comment.reply(message)
-
-# for post in posts:
-#     text = post.title
-#     author = post.author
-#     if 'alexa play' in post.title.lower():
-#         message = "sorry dude despacito sucks".format(author)
-#         post.reply(message)
