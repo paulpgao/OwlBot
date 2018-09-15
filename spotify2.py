@@ -11,4 +11,4 @@ def search_track(track):
     if len(track_id["tracks"]["items"]) > 0 :
         return "Now Playing: " + track_id["tracks"]["items"][0]['external_urls'].get("spotify")
     else:
-        return "No such song."
+        return "No such song on Spotify."
