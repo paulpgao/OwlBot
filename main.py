@@ -1,10 +1,5 @@
 import praw
-import gdata.youtube
-import gdata.youtube.service
-yt_service = gdata.youtube.service.YouTubeService()
-
-yt_service.developer_key = 'AIzaSyB4npSjJ7nlyDpIyjC2eiDGVHnomLP_bNs'
-yt_service.client_id = '992095518153-ucsohpb3emcu3glri3ojn62e8fdkvi8g.apps.googleusercontent.com'
+import spotify
 
 
 alexabot = praw.Reddit(user_agent = 'alexa_play_bot_2',
@@ -20,6 +15,10 @@ comments = subreddit.stream.comments()
 for comment in comments:
     text = comment.body
     author = comment.author
-    if 'alexa play' in text.lower():
-        message = "Now Playing: ".format(author)
+    if ('alexa play' in text.lower()) & (len(text) > 11):
+        print (text)
+        print (text.index('alexa play') + len('alexa play '))
+        songtitle = text[text.index('alexa play ') + len('alexa play '):-1].split('.')[0]
+        # songtitle = text[0:3]
+        message = spotify.search_track(songtitle).format(author)
         comment.reply(message)
