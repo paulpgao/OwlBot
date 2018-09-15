@@ -1,11 +1,6 @@
 import praw
-import gdata.youtube
-import gdata.youtube.service
-yt_service = gdata.youtube.service.YouTubeService()
-
-yt_service.developer_key = 'AIzaSyB4npSjJ7nlyDpIyjC2eiDGVHnomLP_bNs'
-yt_service.client_id = '992095518153-ucsohpb3emcu3glri3ojn62e8fdkvi8g.apps.googleusercontent.com'
-
+import urllib
+from youtube2 import youtube_search
 
 alexabot = praw.Reddit(user_agent = 'alexa_play_bot_2',
                   client_id = 'obgVOv3lTA0JbQ',
@@ -20,6 +15,11 @@ comments = subreddit.stream.comments()
 for comment in comments:
     text = comment.body
     author = comment.author
-    if 'alexa play' in text.lower():
-        message = "Now Playing: ".format(author)
+    text = text.lower()
+
+    if 'alexa play' in text:
+        search = text.replace('alexa play', '')
+        test = youtube_search(search)
+        s = "https://www.youtube.com/watch?v=" + test
+        message = ("Now Playing: " + s).format(author)
         comment.reply(message)
