@@ -1,8 +1,4 @@
-from os import listdir
-from os.path import isfile, join
 import numpy as np
-import matplotlib.pyplot as plt
-from PIL import Image
 import scipy
 from scipy import ndimage
 import glob
@@ -29,14 +25,11 @@ train_set_y = np.concatenate((y_owl, y_nonowl), axis=0).T
 
 train_set_x = (train_set_x.reshape(train_set_x.shape[0], -1)).T / 255
 
+# training
+
 def sigmoid(x):
     s = 1 / (1 + np.exp(-x))
     return s
-
-def initialize_with_zeros(dim):
-    w = np.zeros((dim, 1))
-    b = 0
-    return w, b
 
 def propagate(w, b, X, Y):
     m = X.shape[1]
@@ -96,9 +89,10 @@ def predict(w, b, X):
     return Y_prediction
 
 
-def model(X_train, Y_train, num_iterations=2000, learning_rate=0.5, print_cost=False):
+def model(X_train, Y_train, num_iterations=5000, learning_rate=0.5):
 
-    w, b = initialize_with_zeros(np.shape(X_train)[0])
+    w = np.zeros((np.shape(X_train)[0], 1))
+    b = 0
 
     parameters, grads, costs = optimize(w, b, X_train, Y_train, num_iterations, learning_rate, print_cost=False)
 
@@ -111,6 +105,10 @@ def model(X_train, Y_train, num_iterations=2000, learning_rate=0.5, print_cost=F
 
     return d
 
-d = model(train_set_x, train_set_y, num_iterations = 2000, learning_rate = 0.005, print_cost = True)
+d = model(train_set_x, train_set_y, num_iterations = 2000, learning_rate = 0.005)
 
+pred = open("pred.txt","w")
+for wval in d["w"]:
+    pred.write(np.array_str(wval) + ", ")
+pred.write(str(d["b"]))
 print (d)
