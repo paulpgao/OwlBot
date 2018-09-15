@@ -17,4 +17,4 @@ def youtube_search(q, max_results=50, order="relevance", token=None, location=No
         location=location,
         locationRadius=location_radius
      ).execute()
-    return (search_response['items'][0]['id']['videoId'])
+    return search_response['items'][0]
