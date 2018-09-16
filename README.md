@@ -7,6 +7,6 @@ We have created a reddit bot (track 1), named OwlBot, that performs several fun 
 - Deciphers whether a photo contains an owl when asked with keywords: *owlbot, is this an owl?*
 
 ![img](https://i.imgur.com/8jKmp0q.jpg)
-(edited by Josie Garza)
+(picture edited by Josie Garza)
 
 
