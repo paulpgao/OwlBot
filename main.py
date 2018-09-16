@@ -14,13 +14,13 @@ import image
 #                   client_id = '-aS31v8n1AiB0A',
 #                   client_secret = 'Gb2b9IoMyM0h-JMz7yv0dZra19k',
 #                   username = '_owl_bot_',
-#                   password = 'hackrice')
+#                   password = '')
 
 alexabot = praw.Reddit(user_agent = 'alexa_play_bot_2',
                   client_id = 'obgVOv3lTA0JbQ',
                   client_secret = 'sKCI6fZm9pHLy6WVUBNNuOIwV_8',
                   username = 'alexa_play_bot',
-                  password = '990610Alexa')
+                  password = '')
 
 subreddit = alexabot.subreddit('testingground4bots')
 
