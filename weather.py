@@ -11,7 +11,7 @@ COUNTRY = "us"
 def get_zip(city, state):
     search = ZipcodeSearchEngine()
     zip = search.by_city_and_state(city, state)
-    return zip[0]['Zipcode'] 
+    return zip[0]['Zipcode']
 
 def get_weather(zipCode, city):
     URL = "http://api.openweathermap.org/data/2.5/weather?zip={},{}&units=imperial&APPID=c619c39c92b4a826f0d9cd99d15f0d0d".format(zipCode,COUNTRY)
