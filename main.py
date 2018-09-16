@@ -61,13 +61,13 @@ for comment in comments:
                 comment.reply("I am thinking this is an owl! If you like owls, have you heard of Rice University?")
             else:
                 # comment.reply("Hmm, I am " + str((1 - mypred) * 100)[2:-2] + "% sure this is not an owl. What do you think it is?")
-                comment.reply("Hmm, I don't think this is an owl. What do you think it is?")
+                comment.reply("Hmm, I don't think this is an owl. What do you think it is? If you want to see an owl, visit Rice University!")
             f1 = open('comments.txt', 'a+')
             f1.write(comment.id + " ")
             f1.close()
-        if 'owlbot what is the weather like in ' in text.lower():
+        if 'owlbot, what is the weather like in ' in text.lower():
             search = text[
-                     text.lower().index('owlbot what is the weather like in ') + len('owlbot what is the weather like in '):]
+                     text.lower().index('owlbot, what is the weather like in ') + len('owlbot, what is the weather like in '):]
             city = search.split(',')[0]
             state = search.split(',')[1]
             zip = weather.get_zip(city, state)
