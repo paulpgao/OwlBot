@@ -51,7 +51,7 @@ for comment in comments:
             d = pickle.load(pred)
             pred.close()
 
-            mypred = image.predict(d["w"], d["b"], imgtest)
+            mypred = image.predict_nonlogical(d["w"], d["b"], imgtest)
 
             print (mypred)
 
@@ -60,7 +60,7 @@ for comment in comments:
                 comment.reply("I am thinking this is an owl! If you like owls, have you heard of Rice University?")
             else:
                 # comment.reply("Hmm, I am " + str((1 - mypred) * 100)[2:-2] + "% sure this is not an owl. What do you think it is?")
-                comment.reply("Hmm, I don't think this is not an owl. What do you think it is?")
+                comment.reply("Hmm, I don't think this is an owl. What do you think it is?")
             f1 = open('comments.txt', 'a+')
             f1.write(comment.id + " ")
             f1.close()
