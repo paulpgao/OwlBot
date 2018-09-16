@@ -8,12 +8,13 @@ import scipy
 from scipy import ndimage
 import glob
 import pickle
+import weather
 
-alexabot = praw.Reddit(user_agent = 'alexa_play_bot_2',
-                  client_id = 'obgVOv3lTA0JbQ',
-                  client_secret = 'sKCI6fZm9pHLy6WVUBNNuOIwV_8',
-                  username = 'alexa_play_bot',
-                  password = '990610Alexa')
+alexabot = praw.Reddit(user_agent = '_owl_bot_',
+                  client_id = '-aS31v8n1AiB0A',
+                  client_secret = 'Gb2b9IoMyM0h-JMz7yv0dZra19k',
+                  username = '_owl_bot_',
+                  password = 'hackrice')
 
 subreddit = alexabot.subreddit('testingground4bots')
 
@@ -24,7 +25,7 @@ for comment in comments:
     f = open('comments.txt', 'r+')
     commentIDs = f.read()
     f.close()
-    if len(commentIDs) > 100:
+    if len(commentIDs) > 1000:
         open('comments.txt', 'w')
     text = comment.body
     author = comment.author
@@ -61,6 +62,17 @@ for comment in comments:
             else:
                 # comment.reply("Hmm, I am " + str((1 - mypred) * 100)[2:-2] + "% sure this is not an owl. What do you think it is?")
                 comment.reply("Hmm, I don't think this is an owl. What do you think it is?")
+            f1 = open('comments.txt', 'a+')
+            f1.write(comment.id + " ")
+            f1.close()
+        if 'owlbot what is the weather like in ' in text.lower():
+            search = text[
+                     text.lower().index('owlbot what is the weather like in ') + len('owlbot what is the weather like in '):]
+            city = search.split(',')[0]
+            state = search.split(',')[1]
+            zip = weather.get_zip(city, state)
+            weather_message = weather.get_weather(zip, city)
+            comment.reply(weather_message)
             f1 = open('comments.txt', 'a+')
             f1.write(comment.id + " ")
             f1.close()
