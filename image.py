@@ -2,23 +2,24 @@ import numpy as np
 import scipy
 from scipy import ndimage
 import glob
+import pickle
 
 # setting up the training set
-train_set_owl = np.zeros((120, 64, 64, 3))
+train_set_owl = np.zeros((10, 64, 64, 3))
 i = 0
 for img in glob.glob("F:/Paul Gao/Documents/randombot/owlimages/*.jpg"):
     image = np.array(ndimage.imread(img, flatten=False))
     train_set_owl[i] = scipy.misc.imresize(image, size=(64, 64))
     i += 1
-y_owl = np.ones((120, 1))
+y_owl = np.ones((10, 1))
 
-train_set_nonowl = np.zeros((100, 64, 64, 3))
+train_set_nonowl = np.zeros((10, 64, 64, 3))
 i = 0
 for img in glob.glob("F:/Paul Gao/Documents/randombot/nonowlimages/*.jpg"):
     image = np.array(ndimage.imread(img, flatten=False))
     train_set_nonowl[i] = scipy.misc.imresize(image, size=(64, 64))
     i += 1
-y_nonowl = np.zeros((100, 1))
+y_nonowl = np.zeros((10, 1))
 
 train_set_x = np.concatenate((train_set_owl, train_set_nonowl), axis=0)
 train_set_y = np.concatenate((y_owl, y_nonowl), axis=0).T
@@ -28,7 +29,7 @@ train_set_x = (train_set_x.reshape(train_set_x.shape[0], -1)).T / 255
 # training
 
 def sigmoid(x):
-    s = 1 / (1 + np.exp(-x))
+    s = 1.0 / (1.0 + np.exp(-x))
     return s
 
 def propagate(w, b, X, Y):
@@ -84,8 +85,6 @@ def predict(w, b, X):
         else:
             Y_prediction[0][i] = 1
 
-    assert (Y_prediction.shape == (1, m))
-
     return Y_prediction
 
 
@@ -107,8 +106,19 @@ def model(X_train, Y_train, num_iterations=5000, learning_rate=0.5):
 
 d = model(train_set_x, train_set_y, num_iterations = 2000, learning_rate = 0.005)
 
-pred = open("pred.txt","w")
-for wval in d["w"]:
-    pred.write(np.array_str(wval) + ", ")
-pred.write(str(d["b"]))
-print (d)
+# def predict_nonlogical(w, b, X):
+#
+#     m = X.shape[1]
+#     w = w.reshape(X.shape[0], 1)
+#
+#     A = float(sigmoid(np.matmul(w.T, X) + b))
+#     print (A)
+#
+#     return A
+
+pred = open('pred.pckl', 'wb')
+pickle.dump(d, pred)
+pred.close()
+
+# print (d)
+
