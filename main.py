@@ -2,24 +2,40 @@ import praw
 from youtube2 import youtube_search
 from spotify2 import search_track
 import urllib.request
-import image
 import numpy as np
 import scipy
 from scipy import ndimage
 import glob
 import pickle
 import weather
+import image
 
-alexabot = praw.Reddit(user_agent = '_owl_bot_',
-                  client_id = '-aS31v8n1AiB0A',
-                  client_secret = 'Gb2b9IoMyM0h-JMz7yv0dZra19k',
-                  username = '_owl_bot_',
-                  password = 'hackrice')
+# alexabot = praw.Reddit(user_agent = '_owl_bot_',
+#                   client_id = '-aS31v8n1AiB0A',
+#                   client_secret = 'Gb2b9IoMyM0h-JMz7yv0dZra19k',
+#                   username = '_owl_bot_',
+#                   password = 'hackrice')
+
+alexabot = praw.Reddit(user_agent = 'alexa_play_bot_2',
+                  client_id = 'obgVOv3lTA0JbQ',
+                  client_secret = 'sKCI6fZm9pHLy6WVUBNNuOIwV_8',
+                  username = 'alexa_play_bot',
+                  password = '990610Alexa')
 
 subreddit = alexabot.subreddit('testingground4bots')
 
 comments = subreddit.stream.comments()
 print("Running Owlbot")
+
+# def predict_nonlogical(w, b, X):
+#     w = w.reshape(X.shape[0], 1)
+#     A = sigmoid(np.matmul(w.T, X) + b)
+#     #print (A)
+#     return A
+#
+# def sigmoid(x):
+#     s = 1.0 / (1.0 + np.exp(-x))
+#     return s
 
 for comment in comments:
     f = open('comments.txt', 'r+')
@@ -52,7 +68,7 @@ for comment in comments:
             d = pickle.load(pred)
             pred.close()
 
-            mypred = image.predict_nonlogical(d["w"], d["b"], imgtest)
+            mypred = image.predict(d["w"], d["b"], imgtest)
 
             print (mypred)
 

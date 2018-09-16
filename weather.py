@@ -1,9 +1,4 @@
-import praw
-import time
-import config
 import requests
-import re
-import database_connector
 from uszipcode import ZipcodeSearchEngine
 
 COUNTRY = "us"

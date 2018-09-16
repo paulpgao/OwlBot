@@ -116,12 +116,6 @@ test_set_x = (test_set_x.reshape(test_set_x.shape[0], -1)).T / 255
 
 d = model(train_set_x, train_set_y, test_set_x, test_set_y, 2000, 0.005)
 
-def predict_nonlogical(w, b, X):
-    w = w.reshape(X.shape[0], 1)
-    A = sigmoid(np.matmul(w.T, X) + b)
-    #print (A)
-    return A
-
 pred = open('pred.pckl', 'wb')
 pickle.dump(d, pred)
 pred.close()
