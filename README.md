@@ -1,6 +1,8 @@
 # **HackRice OwlBot Project**
 ### Josie Garza, Alan Ji, Paul Gao, Kangrui Xue
 
+Link: https://www.reddit.com/user/alexa_play_bot/
+
 We have created a reddit bot (track 1), named OwlBot, that performs several fun and practical functions:
 - Provides Youtube and Spotify link to music or other videos when asked with keywords: "*owlbot play*"
 - Provides a weather forecast for any city in the US when asked with keywords: "*owlbot, what is the weather like in*" followed by the "city, state"
